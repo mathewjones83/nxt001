@@ -1,0 +1,13 @@
+# Run from inside the directory holding the fastq files
+
+# Unzip fastq files
+gunzip NXTI-19_S19_L001_R*
+
+# Run novoalign using k03455.nix file
+novoalign -d ../../reference/k034551.nix -o SAM -f NXTI-19_S19_L001_R1_001.fastq NXTI-19_S19_L001_R2_001.fastq > nxti_19_to_hiv.sam &
+
+#Convert sam to bam and then sort new bam file
+samtools view -bS nxti_19_to_hiv.sam | samtools sort - nxti_19_to_hiv_sort
+
+#Index new bam file
+samtools index nxti_19_to_hiv_sort.bam nxti_19_to_hiv_sort.bai &
