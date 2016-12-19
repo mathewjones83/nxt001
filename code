@@ -11,3 +11,9 @@ samtools view -bS nxti_19_to_hiv.sam | samtools sort - nxti_19_to_hiv_sort
 
 #Index new bam file
 samtools index nxti_19_to_hiv_sort.bam nxti_19_to_hiv_sort.bai &
+
+#Pileup for concensus sequence (outputs fastq)
+samtools mpileup -uf K03455.1.fasta nxti_11/nxti_11_bwaalign.bam | bcftools view -cg - | vcfutils.pl vcf2fq > nxti_11/nxti_11_cons.fq
+
+#Then use the following to convert fastq to fasta
+seqtk seq -a nxti_11/nxti_11_cons.fq > nxti_11/nxti_11_cons.fasta &
