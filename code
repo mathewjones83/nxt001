@@ -7,10 +7,10 @@ gunzip NXTI-19_S19_L001_R*
 novoalign -d ../../reference/k034551.nix -o SAM -f NXTI-19_S19_L001_R1_001.fastq NXTI-19_S19_L001_R2_001.fastq > nxti_19_to_hiv.sam &
 
 #Convert sam to bam and then sort new bam file
-samtools view -bS nxti_19_to_hiv.sam | samtools sort - nxti_19_to_hiv_sort
+samtools view -bS ssix_5_hxb2bwaalign.sam | samtools sort - -o ssix_5_hxb2bwaalign_sort.bam
 
 #Index new bam file
-samtools index nxti_19_to_hiv_sort.bam nxti_19_to_hiv_sort.bai &
+samtools index ssix_5_hxb2bwaalign_sort.bam ssix_5_hxb2bwaalign_sort.bai &
 
 #Pileup for concensus sequence (outputs fastq)
 samtools mpileup -uf K03455.1.fasta nxti_11/nxti_11_bwaalign.bam | bcftools view -cg - | vcfutils.pl vcf2fq > nxti_11/nxti_11_cons.fq
